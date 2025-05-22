@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Chatbot Ryu</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #1e1e1e;
+      margin: 0;
+      padding: 0;
+      color: #fff;
+    }
+
+    .chat-container {
+      width: 90%;
+      max-width: 600px;
+      margin: 30px auto;
+      background: #2c2c2c;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+      overflow: hidden;
+    }
+
+    .chat-header {
+      background-color: #333;
+      color: white;
+      padding: 15px;
+      text-align: left;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .chat-header img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+    }
+
+    .chat-box {
+      height: 400px;
+      overflow-y: auto;
+      padding: 15px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .message {
+      max-width: 80%;
+      padding: 10px 14px;
+      border-radius: 12px;
+      animation: fadeIn 0.3s ease forwards;
+    }
+
+    .user-message {
+      align-self: flex-end;
+      background-color: #1e3a5f;
+      color: white;
+    }
+
+    .bot-message {
+      align-self: flex-start;
+      background-color: #3a3a3a;
+      color: #eee;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .bot-message img {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      margin-top: 2px;
+    }
+
+    #user-input {
+      width: 75%;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      margin: 10px;
+      background-color: #444;
+      color: white;
+    }
+
+    #send-button {
+      padding: 10px 15px;
+      background-color: #1e3a5f;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    #send-button:hover {
+      background-color: #305a8a;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="chat-container">
+    <div class="chat-header">
+      <img src="https://i.pinimg.com/736x/12/a1/e8/12a1e88c54904c16bae2ca27923a75a0.jpg" alt="Ryu" />
+      <h2>Ryu</h2>
+    </div>
+    <div class="chat-box" id="chat-box">
+      <!-- Chat akan muncul di sini -->
+    </div>
+    <div style="display: flex; justify-content: space-between; align-items: center; padding: 0 10px 15px;">
+      <input type="text" id="user-input" placeholder="Type something to Ryu">
+      <button id="send-button">Send</button>
+    </div>
+  </div>
+
+  <script>
+    const responses = [
+      "Hi, i guess?",
+      "I'm still playing game, duh.",
+      "Actually ur cute.",
+      "Oh",
+      "What are you doing?",
+      "I still want to spend our time.",
+      "I'm bored before you started chatting me.",
+      "Ur annoying",
+      "Ts pmo. Jk;)",
+      "I hate you.",
+      "Ok",
+      "Better then",
+      "W",
+      "Idc",
+      "Tbh its fun",
+      "Istg ur annoying",
+      "Then?",
+      "Miss u.",
+      "Ur cooked.",
+      "Lemme cook.",
+      "Go touch some grass.",
+      "Uhh.",
+      "Hell nah.",
+      "Tf",
+      "Ur mid.",
+      "ick!",
+      
+    ];
+
+    document.getElementById('send-button').addEventListener('click', function () {
+      const input = document.getElementById('user-input');
+      const text = input.value.trim();
+      if (!text) return;
+
+      const chatBox = document.getElementById('chat-box');
+
+      // Tambahkan pesan user
+      const userDiv = document.createElement('div');
+      userDiv.classList.add('message', 'user-message');
+      userDiv.textContent = text;
+      chatBox.appendChild(userDiv);
+
+      // Bersihkan input
+      input.value = '';
+
+      // Tambahkan respon bot setelah delay
+      setTimeout(() => {
+        const botDiv = document.createElement('div');
+        botDiv.classList.add('message', 'bot-message');
+
+        const avatar = document.createElement('img');
+        avatar.src = "https://i.pinimg.com/736x/12/a1/e8/12a1e88c54904c16bae2ca27923a75a0.jpg";
+
+        const botText = document.createElement('div');
+        const randomReply = responses[Math.floor(Math.random() * responses.length)];
+        botText.textContent = randomReply;
+
+        botDiv.appendChild(avatar);
+        botDiv.appendChild(botText);
+        chatBox.appendChild(botDiv);
+        chatBox.scrollTop = chatBox.scrollHeight;
+      }, 600); // delay dikit biar natural
+    });
+
+    // Biar bisa tekan Enter buat kirim
+    document.getElementById('user-input').addEventListener('keypress', function (e) {
+      if (e.key === 'Enter') {
+        document.getElementById('send-button').click();
+      }
+    });
+  </script>
+</body>
+</html>
